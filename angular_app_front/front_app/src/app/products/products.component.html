@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 class="text-center text-danger">Products</h1>
+  <div class="card">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let p of products">
+        <td>{{p.id}}</td>
+        <td>{{p.name}}</td>
+        <td>{{p.quantity}}</td>
+        <td>{{p.price|number:'.0-3'}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
