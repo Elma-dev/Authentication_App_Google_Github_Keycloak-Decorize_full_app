@@ -1,1 +1,4 @@
-FROM openjdk:
+FROM  openjdk:17-oracle
+VOLUME /tmp
+COPY target/Thymleaf_App_secured-0.0.1-SNAPSHOT.jar thymleaf.jar
+ENTRYPOINT ["java","-jar","/thymleaf.jar"]

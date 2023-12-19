@@ -1,0 +1,54 @@
+services:
+  #Create a service named "mysql_db" from the image "mariadb:latest"
+  mysql_db:
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: products-db #Database name
+      MYSQL_USER: admin #Database user
+      MYSQL_PASSWORD: admin #Database password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart:
+        always
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        interval: 1m30s
+        timeout: 10s
+        retries: 3
+  #-----------------------------------------------------------------
+  #Create a service named "phpmyadmin_db" from the image "phpmyadmin"
+  phpmyadmin_db:
+    image: phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql_db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: admin
+    container_name: phpmyadmin
+    depends_on:
+      - mysql_db
+    restart:
+        always
+  #-----------------------------------------------------------------
+  #Create a service named "products_ms" from the image "products_ms"
+  products_ms:
+    build: ./Products_MS_Secured
+    ports:
+      - "8083:8083"
+    container_name: products_ms
+    depends_on:
+      - mysql_db
+    environment:
+      - DB_VARIABLE=jdbc:mysql://mysql_db:3306/products
+
+    #-----------------------------------------------------------------
+    pos
+#Declare a volumes
+volumes:
+    mysql_data:
