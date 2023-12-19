@@ -25,7 +25,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(auth->auth.requestMatchers("/products/**").permitAll())
+                //.authorizeHttpRequests(auth->auth.requestMatchers("/products/**").permitAll())
                 .authorizeHttpRequests(authReq->authReq.anyRequest().authenticated())
                 .oauth2ResourceServer(oauth->oauth.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthConverter))) // Get Authorities from JWT
                 .build();
