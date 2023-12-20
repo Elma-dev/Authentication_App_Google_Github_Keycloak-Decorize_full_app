@@ -47,8 +47,8 @@ services:
       - keycloak_service
     environment:
       - DB_VARIABLE=jdbc:mysql://mysql_db:3306/products
-      - ISSUER_URI=http://keycloak_service:8080/realms/auth_apps
-      - JWT_URI=http://keycloak_service:8080/auth/realms/auth_apps/protocol/openid-connect/certs
+      - ISSUER_URI=http://localhost:8080/realms/auth_apps
+      - JWT_URI=http://keycloak_service:8080/realms/auth_apps/protocol/openid-connect/certs
 
   #-----------------------------------------------------------------
   #Create a service named "postgres_db" from the image "postgres
@@ -95,13 +95,71 @@ services:
       KC_DB_URL: jdbc:postgresql://postgres_db:5432/keycloak
       KC_DB_USERNAME: admin
       KC_DB_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
     depends_on:
       - postgres_db
     command:
       - start-dev
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
+
+  #-----------------------------------------------------------------
+  # Create a service named "thymeleaf_app"
+  #Create a service named "phpmyadmin_db" from the image "phpmyadmin"
+  mysql_db_thymeleaf:
+    image: mariadb:latest
+    ports:
+      - "3307:3306"
+    container_name: mysql_db_thymeleaf
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: costumers_db #Database name
+      MYSQL_USER: admin #Database user
+      MYSQL_PASSWORD: admin #Database password
+    volumes:
+      - mysql_data:/var/lib/mysqlthymeleaf
+    restart:
+      always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+  phpmyadmin_db_thymeleaf:
+    image: phpmyadmin
+    ports:
+      - "81:80"
+    environment:
+      PMA_HOST: mysql_db_thymeleaf
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: admin
+    container_name: phpmyadmin_thymeleaf
+    depends_on:
+      - mysql_db_thymeleaf
+    restart:
+      always
+
+  thymeleaf_app:
+    build: ./Thymleaf_App_secured
+    ports:
+      - "8081:8081"
+    container_name: thymeleaf_app
+    depends_on:
+      - mysql_db_thymeleaf
+      - keycloak_service
+
+    environment:
+      - DB_URL=jdbc:mysql://mysql_db_thymeleaf:3306/costumers_db
+      - REDIRECT_URI=http://localhost:8080/realms/auth_apps
+      - KEYCLOAK_AUTH=http://localhost:8080/realms/master/protocol/openid-connect/auth
+      - KEYCLOAK_AUTH_TOKEN=http://keycloak_service:8080/realms/master/protocol/openid-connect/token
+      - JWT_JWK_SET_URI=http://keycloak_service:8080/realms/master/protocol/openid-connect/certs
+      - CLIENT_ID=ebank_app_ms
+    restart: always
 #Declare a volumes
 volumes:
     mysql_data:
     postgres_data:
+    mysqlthymeleaf:

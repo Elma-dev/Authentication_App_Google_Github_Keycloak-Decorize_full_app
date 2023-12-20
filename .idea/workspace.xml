@@ -88,7 +88,10 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.yml.phpmyadmin_db: Compose Deployment">
+  <component name="RunManager" selected="HTTP Request.rest-api_2 | #1">
+    <configuration name="rest-api_2 | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api_2.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="customers.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Authentication_App_Google_Github_Keycloak/Thymleaf_App_secured/src/main/resources/templates/customers.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -150,6 +153,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.rest-api_2 | #1" />
         <item itemvalue="Docker.docker-compose.yml.phpmyadmin_db: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.mysql: Compose Deployment" />
@@ -174,7 +178,7 @@
       <workItem from="1702821805435" duration="6230000" />
       <workItem from="1702980992737" duration="796000" />
       <workItem from="1702981815132" duration="68000" />
-      <workItem from="1702981915396" duration="21169000" />
+      <workItem from="1702981915396" duration="35960000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
