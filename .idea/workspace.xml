@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d95bf6cf-66f1-450e-8935-099962e60f8f" name="Changes" comment="commit">
+      <change afterPath="$PROJECT_DIR$/angular_app_front/front_app/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
@@ -70,6 +71,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/angular_app_front/front_app" />
       <recent name="$PROJECT_DIR$/angular_app_front/front_app/src/app/services" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -88,7 +90,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="HTTP Request.rest-api_2 | #1">
+  <component name="RunManager" selected="Spring Boot.ProductsMsSecuredApplication">
     <configuration name="rest-api_2 | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api_2.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -110,11 +112,15 @@
       </method>
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml" />
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile" />
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
@@ -178,7 +184,8 @@
       <workItem from="1702821805435" duration="6230000" />
       <workItem from="1702980992737" duration="796000" />
       <workItem from="1702981815132" duration="68000" />
-      <workItem from="1702981915396" duration="35960000" />
+      <workItem from="1702981915396" duration="36186000" />
+      <workItem from="1703157695497" duration="22869000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />

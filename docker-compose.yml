@@ -84,7 +84,7 @@ services:
       always
   #-----------------------------------------------------------------
   keycloak_service:
-    image: keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:latest
     ports:
       - "8080:8080"
     container_name: keycloak_service
@@ -152,12 +152,24 @@ services:
 
     environment:
       - DB_URL=jdbc:mysql://mysql_db_thymeleaf:3306/costumers_db
-      - REDIRECT_URI=http://localhost:8080/realms/auth_apps
-      - KEYCLOAK_AUTH=http://localhost:8080/realms/master/protocol/openid-connect/auth
-      - KEYCLOAK_AUTH_TOKEN=http://keycloak_service:8080/realms/master/protocol/openid-connect/token
-      - JWT_JWK_SET_URI=http://keycloak_service:8080/realms/master/protocol/openid-connect/certs
-      - CLIENT_ID=ebank_app_ms
+      - PRODUCT_SERVICE_URL=http://products_ms:8083
+      - REDIRECT_URI=http://localhost:8081/login/oauth2/code/ebank_app_ms #goal of this is to redirect to this url after login
+      - KEYCLOAK_AUTH=http://localhost:8080/realms/auth_apps/protocol/openid-connect/auth
+      - KEYCLOAK_AUTH_TOKEN=http://localhost:8080/realms/auth_apps/protocol/openid-connect/token
+      - JWT_JWK_SET_URI=http://keycloak_service:8080/realms/auth_apps/protocol/openid-connect/certs
+      - ISSUER_URI=http://localhost:8080/realms/auth_apps
+      - CLIENT_NAME=ebank_app_ms
     restart: always
+  #-----------------------------------------------------------------
+  #Create Angular App
+  angular_app:
+      build: ./angular_app_front/front_app
+      ports:
+        - "8085:80"
+      expose:
+        - "8085"
+      container_name: angular_app
+      restart: always
 #Declare a volumes
 volumes:
     mysql_data:

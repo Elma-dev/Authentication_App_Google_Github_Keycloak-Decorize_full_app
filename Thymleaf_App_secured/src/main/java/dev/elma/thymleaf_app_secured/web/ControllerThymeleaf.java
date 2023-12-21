@@ -4,6 +4,8 @@ import dev.elma.thymleaf_app_secured.entities.Customer;
 import dev.elma.thymleaf_app_secured.models.Product;
 import dev.elma.thymleaf_app_secured.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,11 +28,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-@Controller @AllArgsConstructor
+@Controller
 @EnableMethodSecurity
 public class ControllerThymeleaf {
     private CustomerRepository customerRepository;
     private ClientRegistrationRepository clientRegistrationRepository; //object handle subscribe provider
+
+    @Value("${product.service.url}")
+    private String productServiceUrl;
+
+    public ControllerThymeleaf(CustomerRepository customerRepository, ClientRegistrationRepository clientRegistrationRepository) {
+        this.customerRepository = customerRepository;
+        this.clientRegistrationRepository = clientRegistrationRepository;
+    }
 
     @GetMapping("/customers")
 
@@ -42,12 +52,13 @@ public class ControllerThymeleaf {
 
     @GetMapping("/products")
     public String allProducts(Model model){
+        System.out.println(productServiceUrl);
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         OAuth2AuthenticationToken oAuth2AuthenticationToken= (OAuth2AuthenticationToken) authentication;
         DefaultOidcUser oidcUser = (DefaultOidcUser) oAuth2AuthenticationToken.getPrincipal();
         String jwtTokenValue=oidcUser.getIdToken().getTokenValue();
-        RestClient restClient = RestClient.create("http://localhost:8083");
+        RestClient restClient = RestClient.create(productServiceUrl);
         List<Product> products = restClient.get()
                 .uri("/products")
                 .headers(httpHeaders -> httpHeaders.set(HttpHeaders.AUTHORIZATION, "Bearer "+jwtTokenValue))
